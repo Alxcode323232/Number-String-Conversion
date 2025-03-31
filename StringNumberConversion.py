@@ -14,54 +14,60 @@ class Conversion:
         self.intHundreds = [100, 1000, 1000000, 1000000000, 1000000000000]
     def convertToNum(self, string):
         """Convert words of numbers to an integer number"""
-        string = string.lower()
-        strList = string.split()
-        answer = 0
-        i = 0
-        while i < len(strList):
-            if strList[i] not in self.strHundreds:
-                subAnswer = self.strDict[strList[i]] 
-                """subAnswer to detect self.strHundreds after a number < 100; e.g: "thirty two"""
-                k = i + 1
-                while k < len(strList):
-                    if strList[k % len(strList)] not in self.strHundreds and strList[k - 1] in self.strHundreds: 
-                        """ If the next number under 100 is found, AND self.strHundreds already found, break. E.g: six hundred eighteen -> break at 'eighteen' """
-                        break
-                    elif strList[k % len(strList)] not in self.strHundreds and strList[k - 1] not in self.strHundreds: 
-                        """ If there was no self.strHundreds yet, add number to subAnswer. E.g: twenty two -> 20 + 2 """
-                        subAnswer += self.strDict[strList[k]]
-                        i += 1
-                    else:
-                        subAnswer *= self.strDict[strList[k]]
-                    k += 1
-                answer += subAnswer
-            i += 1
-        return answer
+        try:
+            string = string.lower()
+            strList = string.split()
+            answer = 0
+            i = 0
+            while i < len(strList):
+                if strList[i] not in self.strHundreds:
+                    subAnswer = self.strDict[strList[i]] 
+                    """subAnswer to detect self.strHundreds after a number < 100; e.g: "thirty two"""
+                    k = i + 1
+                    while k < len(strList):
+                        if strList[k % len(strList)] not in self.strHundreds and strList[k - 1] in self.strHundreds: 
+                            """ If the next number under 100 is found, AND self.strHundreds already found, break. E.g: six hundred eighteen -> break at 'eighteen' """
+                            break
+                        elif strList[k % len(strList)] not in self.strHundreds and strList[k - 1] not in self.strHundreds: 
+                            """ If there was no self.strHundreds yet, add number to subAnswer. E.g: twenty two -> 20 + 2 """
+                            subAnswer += self.strDict[strList[k]]
+                            i += 1
+                        else:
+                            subAnswer *= self.strDict[strList[k]]
+                        k += 1
+                    answer += subAnswer
+                i += 1
+            return answer
+        except:
+            return "Wrong input."
     def convertToString(self, number):
         """Convert integer number to a words of numbers"""
-        answer = []
-        if number == 0:
-            return "zero"
-        i = 0
-        compare = 0
-        while number != compare:
-            i += 1
-            compare = number % (10**i)
-            if compare != 0:
-                if i > 2:
-                    digit = int(compare / (10**(i-1)))
-                    if digit != 0:
-                        if i > 1 and i < 5:
-                            answer.append(self.intDict[10**(i-1)])
-                        answer.append(self.intDict[digit])
-                else:
-                    if number > 19:
-                        if i == 2:
-                            if compare % 10 != 0:
-                                answer.append(self.intDict[compare % 10])
-                            answer.append(self.intDict[compare - compare % 10])
+        try:
+            answer = []
+            if number == 0:
+                return "zero"
+            i = 0
+            compare = 0
+            while number != compare:
+                i += 1
+                compare = number % (10**i)
+                if compare != 0:
+                    if i > 2:
+                        digit = int(compare / (10**(i-1)))
+                        if digit != 0:
+                            if i > 1 and i < 5:
+                                answer.append(self.intDict[10**(i-1)])
+                            answer.append(self.intDict[digit])
                     else:
-                        answer.append(self.intDict[compare])
-                        i += 1
-        answer.reverse()
-        return " ".join(answer)
+                        if number > 19:
+                            if i == 2:
+                                if compare % 10 != 0:
+                                    answer.append(self.intDict[compare % 10])
+                                answer.append(self.intDict[compare - compare % 10])
+                        else:
+                            answer.append(self.intDict[compare])
+                            i += 1
+            answer.reverse()
+            return " ".join(answer)
+        except:
+            return "Something went wrong."

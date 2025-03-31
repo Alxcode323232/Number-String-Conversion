@@ -7,4 +7,4 @@ This program is designed to convert number sentances into a number and vise vers
 Runs in your local browser.  
 Feel free to use it for your application ;)
 ### Dependencies
-* NiceGUI: 2.13.0 ([MIT](https://opensource.org/licenses/MIT))
+* Flask: 3.0.2 ([MIT](https://opensource.org/licenses/MIT))
